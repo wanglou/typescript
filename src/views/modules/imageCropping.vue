@@ -8,7 +8,7 @@
       action="#">
       <el-button type="primary" size="mini"> 上传图片 </el-button>
     </el-upload>
-    <el-button style="margin-left: 10px;" type="primary" size="mini"  @click="tailoringBtn"> 裁剪 </el-button>
+    <el-button v-if="maskShow" style="margin-left: 10px;" type="primary" size="mini"  @click="tailoringBtn"> 裁剪 </el-button>
     <div class="container" >
       <!-- 裁剪区 -->
       <div class="tailoring">
@@ -20,7 +20,12 @@
 
         <!-- 拖拽区域 -->
         <div v-if="maskShow" ref="hiddenImg" class="drag" :style="maskStyle" @click="maskClick" @mousedown="maskMove">
-          <img :style="hiddenImgStyle" v-if="imgSrc" :src="imgSrc" alt="">
+          <div class="hidden-img-container">
+            <img :style="hiddenImgStyle" v-if="imgSrc" :src="imgSrc" alt="">
+          </div>
+
+          <!-- 右下角拖拽点 -->
+          <span class="point" ref="point" @mousedown="pointMouseDown"></span>
         </div>
       </div>
       <!-- 效果展示区 -->
@@ -37,7 +42,7 @@
 
 import Vue from 'vue'
 import Component from 'vue-class-component'
-// Define the component in class-style-
+// Define the component in class-style
 @Component({
   created () {
   }
@@ -53,10 +58,12 @@ export default class imageCropping extends Vue {
   startY: number = 0
   imgWidth: number = 0
   imgHeight: number = 0
+  canDrag: boolean = true
   // 上传图片
   uploadChange (file: object): void {
     let raw = (file as any).raw
     this.maskShow = true
+    this.showImgSrc = ''
     this.getImgWH(raw)
   }
 
@@ -84,7 +91,9 @@ export default class imageCropping extends Vue {
           }
           _this.imgSrc = URL.createObjectURL(file)
           
-          _this.maskClick()
+          setTimeout(() => {
+            _this.maskClick()
+          }, 100);
         }
       };
       reader.readAsDataURL(file)
@@ -125,9 +134,15 @@ export default class imageCropping extends Vue {
     element.onmousemove = function (ev: any) {
       // 鼠标移动时获取
       event = ev || window.event
-      _this.maskStyle = {
-        top: (maskTop + ((event as any).clientY - clientY)) + 'px',
-        left: (maskLeft + ((event as any).clientX - clientX)) + 'px',
+      let top = maskTop + ((event as any).clientY - clientY)
+      let left = maskLeft + ((event as any).clientX - clientX)
+      if (top < 0) top = 0
+      else if (top > 300) top = 300
+      if (left < 0) left = 0
+      else if (left > 300) left = 300
+      if (_this.canDrag) {
+        _this.$set(_this.maskStyle, 'top', top + 'px')
+        _this.$set(_this.maskStyle, 'left', left + 'px')
       }
       _this.maskClick()
     }
@@ -139,7 +154,10 @@ export default class imageCropping extends Vue {
 
   // 生成裁剪后的图片
   onPreloadComplete (imgObject) {
-    this.showImgSrc = this.getImagePortion(imgObject, 100, 100, -this.startX, -this.startY, this.imgWidth, this.imgHeight);
+    let element = this.$refs.hiddenImg as any,
+    maskWidth = element.offsetWidth,
+    maskHeight = element.offsetHeight
+    this.showImgSrc = this.getImagePortion(imgObject, maskWidth, maskHeight, -this.startX, -this.startY, this.imgWidth, this.imgHeight);
   }
 
   // 图像截取
@@ -157,12 +175,37 @@ export default class imageCropping extends Vue {
     tnCanvasContext.drawImage(bufferCanvas, startX,startY,newWidth, newHeight,0,0,newWidth,newHeight);
     return tnCanvas.toDataURL();
   }
+
+  // 右下角拖拽点点击
+  pointMouseDown (e: any):void {
+    let element = this.$refs.hiddenImg as any,
+    maskWidth = element.offsetWidth,
+    maskHeight = element.offsetHeight
+    let _this = this,
+    pointEvent = e || window.event,
+    clientX = pointEvent.clientX,
+    clientY = pointEvent.clientY
+    this.canDrag = false
+    document.onmousemove = function (ev: any) {
+      // 鼠标移动时获取
+      event = (ev || window.event) as any
+      _this.$set(_this.maskStyle, 'width', (maskWidth + ((event as any).clientX - clientX)) + 'px')
+      _this.$set(_this.maskStyle, 'height', (maskHeight + ((event as any).clientY - clientY)) + 'px')
+    }
+    
+    document.onmouseup = function (ev: any) {
+      document.onmousemove = null
+      document.onmouseup = null
+      _this.canDrag = true
+    }
+  }
 }
 </script>
 <style lang="scss">
   .image-cropping {
     // 所有元素不可选中
     * {
+      user-select: none;
       -webkit-user-drag: none;
     }
     .container {
@@ -190,7 +233,7 @@ export default class imageCropping extends Vue {
           bottom: 0;
           width: 100%;
           background: #000;
-          opacity: .3;
+          opacity: .5;
         }
         // 拖拽区域
         .drag {
@@ -200,9 +243,24 @@ export default class imageCropping extends Vue {
           width: 100px;
           height: 100px;
           background: transparent;
-          border: 1px dashed #000;
+          border: 1px dashed #3495F4;
           cursor: move;
-          overflow: hidden;
+          .hidden-img-container {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+            overflow: hidden;
+          }
+          .point {
+            position: absolute;
+            right: -3px;
+            bottom: -3px;
+            width: 6px;
+            height: 6px;
+            background: #3495F4;
+            cursor: se-resize;
+          }
         }
       }
       
@@ -212,8 +270,11 @@ export default class imageCropping extends Vue {
         width: 300px;
         height: 400px;
         border: 1px solid #ddd;
+        background: #ddd;
+        border-radius: 10px;
         &>div {
           margin: 25px auto;
+          background: #fff;
           border: 1px solid #ddd;
           img {
             width: 100%;
