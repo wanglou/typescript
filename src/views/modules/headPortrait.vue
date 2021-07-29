@@ -31,7 +31,6 @@
       </div>
     </div>
   </div>
-  <!-- <canvas width=""></canvas> -->
 </template>
 
 <script lang="ts">
