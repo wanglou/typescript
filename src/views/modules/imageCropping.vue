@@ -37,7 +37,7 @@
 
 import Vue from 'vue'
 import Component from 'vue-class-component'
-// Define the component in class-style
+// Define the component in class-style-
 @Component({
   created () {
   }
