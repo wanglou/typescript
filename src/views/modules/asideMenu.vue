@@ -36,7 +36,7 @@ export default class AsideMenu extends Vue {
     { name: '水印', path: '/watermark' },
     { name: '防抖节流', path: '/debounceThrottle' },
     { name: '闭包', path: '/closure' },
-    { name: '图片裁剪', path: '/headPortrait' }
+    { name: '图片裁剪', path: '/imageCropping' }
   ]
   asideClick (item, index):void {
     this.activeNum = index

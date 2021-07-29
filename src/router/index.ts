@@ -15,44 +15,44 @@ const routes: Array<RouteConfig> = [
         path: '/homePage',
         name: 'homePage',
         meta: {index: 0},
-        component: () => import(/* webpackChunkName: "about" */ '../views/modules/homePage.vue')
+        component: () => import(/* webpackChunkName: "homePage" */ '../views/modules/homePage.vue')
       },
       {
         path: '/canvasPage',
         name: 'canvasPage',
         meta: {index: 1},
-        component: () => import(/* webpackChunkName: "about" */ '../views/modules/canvasPage.vue')
+        component: () => import(/* webpackChunkName: "canvasPage" */ '../views/modules/canvasPage.vue')
       },
       {
         path: '/watermark',
         name: 'watermark',
         meta: {index: 2},
-        component: () => import(/* webpackChunkName: "about" */ '../views/modules/watermark.vue')
+        component: () => import(/* webpackChunkName: "watermark" */ '../views/modules/watermark.vue')
       },
       {
         path: '/debounceThrottle',
         name: 'debounceThrottle',
         meta: {index: 3},
-        component: () => import(/* webpackChunkName: "about" */ '../views/modules/debounceThrottle.vue')
+        component: () => import(/* webpackChunkName: "debounceThrottle" */ '../views/modules/debounceThrottle.vue')
       },
       {
         path: '/closure',
         name: 'closure',
         meta: {index: 4},
-        component: () => import(/* webpackChunkName: "about" */ '../views/modules/closure.vue')
+        component: () => import(/* webpackChunkName: "closure" */ '../views/modules/closure.vue')
       },
       {
-        path: '/headPortrait',
-        name: 'headPortrait',
+        path: '/imageCropping',
+        name: 'imageCropping',
         meta: {index: 5},
-        component: () => import(/* webpackChunkName: "about" */ '../views/modules/headPortrait.vue')
+        component: () => import(/* webpackChunkName: "imageCropping" */ '../views/modules/imageCropping.vue')
       }
     ]
   },
   {
     path: '/login',
     name: 'login',
-    component: () => import(/* webpackChunkName: "about" */ '../views/login.vue')
+    component: () => import(/* webpackChunkName: "login" */ '../views/login.vue')
   }
 ]
 

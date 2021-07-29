@@ -1,5 +1,5 @@
 <template>
-  <div class="head-portrait">
+  <div class="image-cropping">
     <el-upload
       style="display: inline-block;"
       :auto-upload="false"
@@ -42,7 +42,7 @@ import Component from 'vue-class-component'
   created () {
   }
 })
-export default class headPortrait extends Vue {
+export default class imageCropping extends Vue {
   imgSrc: string = ''
   showImgSrc: string = ''
   imgStyle: object = {}
@@ -160,7 +160,7 @@ export default class headPortrait extends Vue {
 }
 </script>
 <style lang="scss">
-  .head-portrait {
+  .image-cropping {
     // 所有元素不可选中
     * {
       -webkit-user-drag: none;
