@@ -46,6 +46,12 @@ const routes: Array<RouteConfig> = [
         name: 'imageCropping',
         meta: {index: 5},
         component: () => import(/* webpackChunkName: "imageCropping" */ '../views/modules/imageCropping.vue')
+      },
+      {
+        path: '/calendar',
+        name: 'calendar',
+        meta: {index: 5},
+        component: () => import(/* webpackChunkName: "calendar" */ '../views/modules/calendar.vue')
       }
     ]
   },

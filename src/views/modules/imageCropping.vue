@@ -83,11 +83,14 @@ export default class imageCropping extends Vue {
         img = document.createElement("img") as any;
         img.src = txt
         img.onload = function () {
+
           _this.imgWidth = img.width, _this.imgHeight = img.height
+          // 判断图片是否需要缩小
+          let bigOrSmall = _this.imgWidth > 400 || _this.imgHeight > 400
           if (_this.imgWidth > _this.imgHeight) {
-            _this.imgStyle = { width: '100%' }
+            _this.imgStyle = { width: bigOrSmall ? '100%' : _this.imgWidth + 'px' }
           } else {
-            _this.imgStyle = { height: '100%' }
+            _this.imgStyle = { height: bigOrSmall ? '100%' : _this.imgHeight + 'px' }
           }
           _this.imgSrc = URL.createObjectURL(file)
           
@@ -137,9 +140,9 @@ export default class imageCropping extends Vue {
       let top = maskTop + ((event as any).clientY - clientY)
       let left = maskLeft + ((event as any).clientX - clientX)
       if (top < 0) top = 0
-      else if (top > 300) top = 300
+      else if ((element.offsetHeight + top) > 400) top = 400 - element.offsetHeight
       if (left < 0) left = 0
-      else if (left > 300) left = 300
+      else if ((element.offsetWidth + left) > 400) left = 400 - element.offsetWidth
       if (_this.canDrag) {
         _this.$set(_this.maskStyle, 'top', top + 'px')
         _this.$set(_this.maskStyle, 'left', left + 'px')
@@ -254,11 +257,11 @@ export default class imageCropping extends Vue {
           }
           .point {
             position: absolute;
-            right: -3px;
-            bottom: -3px;
-            width: 6px;
-            height: 6px;
-            background: #3495F4;
+            right: -5px;
+            bottom: -5px;
+            border: 5px solid transparent;
+            border-left-color: #3495F4;
+            transform: rotate(45deg);
             cursor: se-resize;
           }
         }
