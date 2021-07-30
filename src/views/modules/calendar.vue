@@ -92,7 +92,7 @@ export default class calendar extends Vue {
   // 获取每个月几天
   getDays (year:number, month: number):number {
     let days = [31, 28, 31, 30, 31, 30, 31, 30, 30, 31, 30, 31] 
-    if ( (year % 4 ===0) && (year % 100 !==0 || year % 400 ===0) ) {
+    if ( (year % 4 === 0) && (year % 100 !== 0 || year % 400 === 0) ) {
       days[1] = 29
     }
 　　return days[month]  
