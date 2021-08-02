@@ -50,8 +50,14 @@ const routes: Array<RouteConfig> = [
       {
         path: '/calendar',
         name: 'calendar',
-        meta: {index: 5},
+        meta: {index: 6},
         component: () => import(/* webpackChunkName: "calendar" */ '../views/modules/calendar.vue')
+      },
+      {
+        path: '/flex',
+        name: 'flex',
+        meta: {index: 7},
+        component: () => import(/* webpackChunkName: "flex" */ '../views/modules/flex.vue')
       }
     ]
   },
