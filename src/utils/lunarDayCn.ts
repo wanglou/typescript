@@ -66,7 +66,7 @@ function fun (time?) {
     //     该对象属性有 农历年year 农历月month 农历日day 是否闰年isLeap yearCyl dayCyl monCyl
     function Lunar(objDate) {
     let i, temp = 0
-    let baseDate = new Date(1900,0,31)
+    let baseDate = new Date(1900,0,31) as any
     let offset   = Math.floor((objDate - baseDate)/86400000)
     
     let dayCyl = offset + 40
@@ -170,7 +170,7 @@ function fun (time?) {
     
     //去掉时分秒的日期
     let sDObj = new Date(GY, GM, GD);
-    let lDObj = new Lunar(sDObj);
+    let lDObj = Lunar(sDObj);
     
     calendar.lunarMonthCn = cDay(lDObj.month,lDObj.day).lunarMonthCn
     calendar.lunarDayCn = cDay(lDObj.month,lDObj.day).lunarDayCn
