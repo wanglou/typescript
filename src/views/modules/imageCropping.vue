@@ -9,7 +9,7 @@
       <el-button type="primary" size="mini"> 上传图片 </el-button>
     </el-upload>
     <el-button v-if="maskShow" style="margin-left: 10px;" type="primary" size="mini"  @click="tailoringBtn"> 裁剪 </el-button>
-    <div class="container" id="pdfDom">
+    <div class="container" >
       <!-- 裁剪区 -->
       <div class="tailoring">
 
@@ -34,30 +34,7 @@
         <div> <img v-if="showImgSrc" :src="showImgSrc" alt=""> </div>
         <div> <img v-if="showImgSrc" :src="showImgSrc" alt=""> </div>
       </div>
-
-      <el-table
-        :data="tableData"
-        height="100"
-        border
-        style="width: 100%">
-        <el-table-column
-          prop="date"
-          label="日期"
-          width="180">
-        </el-table-column>
-        <el-table-column
-          prop="name"
-          label="姓名"
-          width="180">
-        </el-table-column>
-        <el-table-column
-          prop="address"
-          label="地址">
-        </el-table-column>
-      </el-table>
     </div>
-
-    <el-button type="primary" size="small" @click="exportPDF()"> 导出 PDF </el-button>
   </div>
 </template>
 
@@ -71,24 +48,6 @@ import Component from 'vue-class-component'
   }
 })
 export default class imageCropping extends Vue {
-  tableData = [{
-    date: '2016-05-02',
-    name: '王小虎',
-    address: '上海市普陀区金沙江路 1518 弄'
-  }, {
-    date: '2016-05-04',
-    name: '王小虎',
-    address: '上海市普陀区金沙江路 1517 弄'
-  }, {
-    date: '2016-05-01',
-    name: '王小虎',
-    address: '上海市普陀区金沙江路 1519 弄'
-  }, {
-    date: '2016-05-03',
-    name: '王小虎',
-    address: '上海市普陀区金沙江路 1516 弄'
-  }]
-  htmlTitle = '页面导出PDF文件名'
   imgSrc: string = ''
   showImgSrc: string = ''
   imgStyle: object = {}
@@ -100,12 +59,6 @@ export default class imageCropping extends Vue {
   imgWidth: number = 0
   imgHeight: number = 0
   canDrag: boolean = true
-
-  // 导出pdf
-  exportPDF () {
-    (this as any).getPdf()
-  }
-
   // 上传图片
   uploadChange (file: object): void {
     let raw = (file as any).raw
