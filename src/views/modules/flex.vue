@@ -67,7 +67,7 @@
         <div class="item" v-for="item in 6" :key="item"> {{ item }} </div>
       </div>
     </div>
-    
+
     <div class="container align-items">
       <h3> align-items属性定义项目在交叉轴上如何对齐。 </h3>
       <p> align-items-flex-start </p>

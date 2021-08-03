@@ -38,7 +38,8 @@ export default class AsideMenu extends Vue {
     { name: '闭包', path: '/closure' },
     { name: '图片裁剪', path: '/imageCropping' },
     { name: '日历', path: '/calendar' },
-    { name: 'flex弹性盒子', path: '/flex' }
+    { name: 'flex弹性盒子', path: '/flex' },
+    { name: '导出PDF', path: '/exportPDF' }
   ]
   asideClick (item, index):void {
     this.activeNum = index

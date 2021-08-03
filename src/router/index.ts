@@ -58,6 +58,12 @@ const routes: Array<RouteConfig> = [
         name: 'flex',
         meta: {index: 7},
         component: () => import(/* webpackChunkName: "flex" */ '../views/modules/flex.vue')
+      },
+      {
+        path: '/exportPDF',
+        name: 'exportPDF',
+        meta: {index: 8},
+        component: () => import(/* webpackChunkName: "exportPDF" */ '../views/modules/exportPDF.vue')
       }
     ]
   },

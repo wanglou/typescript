@@ -55,11 +55,11 @@ let date    = now.getDate()
 let hours   = now.getHours()
 let minutes = now.getMinutes()
 let seconds = now.getSeconds()
-month   = month.toString().padStart(2, '0')
-date    = date.toString().padStart(2, '0')
-hours   = hours.toString().padStart(2, '0')
-minutes = minutes.toString().padStart(2, '0')
-seconds = seconds.toString().padStart(2, '0')
+month   = month.toString().padStart(2, '0') as any
+date    = date.toString().padStart(2, '0') as any
+hours   = hours.toString().padStart(2, '0') as any
+minutes = minutes.toString().padStart(2, '0') as any
+seconds = seconds.toString().padStart(2, '0') as any
 
 //==== 传入 offset 传回干支, 0=甲子
 function cyclical(num) {
@@ -99,7 +99,7 @@ function monthDays(year, month) {
 //     该对象属性有 农历年year 农历月month 农历日day 是否闰年isLeap yearCyl dayCyl monCyl
 function Lunar(objDate) {
   let i, temp = 0
-  let baseDate = new Date(1900,0,31)
+  let baseDate = new Date(1900,0,31) as any
   let offset   = Math.floor((objDate - baseDate)/86400000)
 
   let dayCyl = offset + 40
@@ -242,7 +242,7 @@ calendar.seconds = seconds
 
 //去掉时分秒的日期
 let sDObj = new Date(GY, GM, GD);
-let lDObj = new Lunar(sDObj);
+let lDObj = Lunar(sDObj);
 
 //农历年月日、生肖年
 calendar.lunarYear = lDObj.year
