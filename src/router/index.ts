@@ -64,6 +64,12 @@ const routes: Array<RouteConfig> = [
         name: 'exportPDF',
         meta: {index: 8},
         component: () => import(/* webpackChunkName: "exportPDF" */ '../views/modules/exportPDF.vue')
+      },
+      {
+        path: '/bubbleSort',
+        name: 'bubbleSort',
+        meta: {index: 9},
+        component: () => import(/* webpackChunkName: "bubbleSort" */ '../views/modules/bubbleSort.vue')
       }
     ]
   },
