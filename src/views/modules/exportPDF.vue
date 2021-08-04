@@ -1,6 +1,5 @@
 <template>
   <div class="export-PDF" id="pdfDom">
-    
     <v-chart :option="option" style="height: 400px;"/>
     <el-button type="primary" size="small" @click="exportPDF()"> 导出 PDF </el-button>
   </div>
