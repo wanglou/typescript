@@ -16,15 +16,15 @@ export default class exportPDF extends Vue {
   htmlTitle = '页面导出PDF文件名'
   option = {
     textStyle: {
-      fontFamily: 'Inter, "Helvetica Neue", Arial, sans-serif',
+      fontFamily: 'Inter, "Helvetica Neue", Arial, sans-serif'
     },
     title: {
       text: "Traffic Sources",
-      left: "center",
+      left: "center"
     },
     tooltip: {
       trigger: "item",
-      formatter: "{a} <br/>{b} : {c} ({d}%)",
+      formatter: "{a} <br/>{b} : {c} ({d}%)"
     },
     legend: {
       orient: "vertical",
@@ -34,8 +34,8 @@ export default class exportPDF extends Vue {
         "Email",
         "Ad Networks",
         "Video Ads",
-        "Search Engines",
-      ],
+        "Search Engines"
+      ]
     },
     series: [
       {
@@ -48,17 +48,17 @@ export default class exportPDF extends Vue {
           { value: 310, name: "Email" },
           { value: 234, name: "Ad Networks" },
           { value: 135, name: "Video Ads" },
-          { value: 1548, name: "Search Engines" },
+          { value: 1548, name: "Search Engines" }
         ],
         emphasis: {
           itemStyle: {
             shadowBlur: 10,
             shadowOffsetX: 0,
-            shadowColor: "rgba(0, 0, 0, 0.5)",
-          },
-        },
-      },
-    ],
+            shadowColor: "rgba(0, 0, 0, 0.5)"
+          }
+        }
+      }
+    ]
   }
   // 导出pdf
   exportPDF () {
