@@ -70,6 +70,12 @@ const routes: Array<RouteConfig> = [
         name: 'bubbleSort',
         meta: {index: 9},
         component: () => import(/* webpackChunkName: "bubbleSort" */ '../views/modules/bubbleSort.vue')
+      },
+      {
+        path: '/mock',
+        name: 'mock',
+        meta: {index: 10},
+        component: () => import(/* webpackChunkName: "mock" */ '../views/modules/mock.vue')
       }
     ]
   },
