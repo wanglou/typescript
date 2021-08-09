@@ -68,15 +68,15 @@ export default class mock extends Vue {
     })) */
 
     // 指定数组返回的条数
-    console.log(Mock.mock({
-      'list|5-10':[
-        {
-          name: '@cname()',
-          address: '@city(true)',
-          id: '@increment(1)' // 每次都增加1
-        }
-      ]
-    }))
+    // console.log(Mock.mock({
+    //   'list|5-10':[
+    //     {
+    //       name: '@cname()',
+    //       address: '@city(true)',
+    //       id: '@increment(1)' // 每次都增加1
+    //     }
+    //   ]
+    // }))
   }
 }
 </script>
