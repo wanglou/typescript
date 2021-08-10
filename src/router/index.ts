@@ -76,6 +76,12 @@ const routes: Array<RouteConfig> = [
         name: 'mock',
         meta: {index: 10},
         component: () => import(/* webpackChunkName: "mock" */ '../views/modules/mock.vue')
+      },
+      {
+        path: '/async',
+        name: 'async',
+        meta: {index: 11},
+        component: () => import(/* webpackChunkName: "async" */ '../views/modules/async.vue')
       }
     ]
   },

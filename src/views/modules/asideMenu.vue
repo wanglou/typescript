@@ -41,7 +41,8 @@ export default class AsideMenu extends Vue {
     { name: 'flex弹性盒子', path: '/flex' },
     { name: '导出PDF', path: '/exportPDF' },
     { name: '冒泡排序', path: '/bubbleSort' },
-    { name: 'mock', path: '/mock' }
+    { name: 'mock', path: '/mock' },
+    { name: 'async', path: '/async' }
   ]
   asideClick (item, index):void {
     this.activeNum = index
