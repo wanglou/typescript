@@ -1,4 +1,4 @@
-# vue-ts
+# vue-ts typescript练习
 
 ## Project setup
 ```
