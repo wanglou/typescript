@@ -82,6 +82,12 @@ const routes: Array<RouteConfig> = [
         name: 'async',
         meta: {index: 11},
         component: () => import(/* webpackChunkName: "async" */ '../views/modules/async.vue')
+      },
+      {
+        path: '/ES6class',
+        name: 'ES6class',
+        meta: {index: 12},
+        component: () => import(/* webpackChunkName: "ES6class" */ '../views/modules/ES6class.vue')
       }
     ]
   },
