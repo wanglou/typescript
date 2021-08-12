@@ -11,7 +11,7 @@ import Component from 'vue-class-component'
 import { extend } from 'vue/types/umd'
 // Define the component in class-style
 class Person {
-  name
+  name: number
   constructor(parameters) {
     this.name = parameters
   }
@@ -23,6 +23,10 @@ class Person {
   }
 }
 class PersonA extends Person {
+  constructor (parameters) {
+    super(parameters)
+    console.log(this.name)
+  }
   say () {
     return this.toStringA()
   }
