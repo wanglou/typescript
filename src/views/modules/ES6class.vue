@@ -1,6 +1,7 @@
 <template>
   <div class="es6-class">
     {{ a }}
+    <iframe src="http://localhost:80" frameborder="0"></iframe>
   </div>
 </template>
 
@@ -39,6 +40,10 @@ export default class ES6class extends Vue {
   a:any
   b: any
   created() {
+    window.addEventListener('message', function(ev) {
+      var data = ev.data;
+      console.log(data)
+    }, false);
     this.a = new Person(1).toStringA()
     // console.log(typeof this.a)
     this.b = new PersonA(12).say()
