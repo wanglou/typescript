@@ -39,7 +39,7 @@ class PersonA extends Person {
 export default class ES6class extends Vue {
   a:any
   b: any
-  created() {
+  created () {
     window.addEventListener('message', function(ev) {
       var data = ev.data;
       console.log(data)
