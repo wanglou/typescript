@@ -43,7 +43,8 @@ export default class AsideMenu extends Vue {
     // { name: '冒泡排序', path: '/bubbleSort' },
     // { name: 'mock', path: '/mock' },
     { name: 'async', path: '/async' },
-    { name: 'ES6class', path: '/ES6class' }
+    { name: 'ES6class', path: '/ES6class' },
+    { name: '...', path: '/ExtOperator' }
   ]
   asideClick (item, index):void {
     this.activeNum = index

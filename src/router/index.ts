@@ -88,6 +88,12 @@ const routes: Array<RouteConfig> = [
         name: 'ES6class',
         meta: {index: 12},
         component: () => import(/* webpackChunkName: "ES6class" */ '../views/modules/ES6class.vue')
+      },
+      {
+        path: '/ExtOperator',
+        name: 'ExtOperator',
+        meta: {index: 12},
+        component: () => import(/* webpackChunkName: "ExtOperator" */ '../views/modules/ExtOperator.vue')
       }
     ]
   },
