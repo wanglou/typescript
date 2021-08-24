@@ -12,7 +12,9 @@ service.interceptors.request.use(config => {
     config.method === 'put' ||
     config.method === 'delete'
   ) {
-    config.data = querystring.stringify(config.data)
+    
+    // config.headers = { "Content-Type": "application/json" }
+    // config.data = JSON.stringify(config.data)
   }
   return config
 }, error => {

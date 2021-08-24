@@ -48,7 +48,7 @@ module.exports = {
       hotOnly: false,
       proxy: {// 设置代理
           '/api': {
-              target: 'http://',
+              target: 'http://dev.hbisco.com',
               changeOrigin: true,
               pathRewrite: {
                   '^/api': '/'
