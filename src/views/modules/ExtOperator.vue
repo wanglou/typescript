@@ -32,7 +32,7 @@ export default class ExtOperator extends Vue {
       xhr.setRequestHeader("accesstoken", 'this.app_token');
       xhr.send(JSON.stringify(data));
       xhr.onreadystatechange = function () {
-        if (xhr.readyState==4  && xhr.status==200) {
+        if (xhr.readyState === 4 && xhr.status === 200) {
           res(JSON.parse(xhr.responseText))
         }
       }

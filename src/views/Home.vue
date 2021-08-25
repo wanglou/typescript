@@ -16,6 +16,7 @@
               管理员<i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item @click.native="switchBtn">切换</el-dropdown-item>
               <el-dropdown-item @click.native="logout">退出</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -23,21 +24,7 @@
         </div>
         <h3> TYPESCRIPT </h3>
       </el-header>
-
-
-      <el-container class="home-main">
-        <!-- 侧边导航栏 -->
-        <el-aside width="260px">
-          <AsideMenu/>
-        </el-aside>
-
-        <!-- 主题页面 -->
-        <el-container class="main-right">
-          <el-main>
-            <router-view></router-view>
-          </el-main>
-        </el-container>
-      </el-container>
+      <router-view></router-view>
     </el-container>
   </div>
 </template>
@@ -70,6 +57,15 @@ export default class home extends Vue {
   // 退出登录
   logout () {
     this.$router.push('/login')
+  }
+
+  // 切换
+  switchBtn () {
+    if (!isNaN(this.$route.meta.index)) {
+      this.$router.push('/visualPlatform')
+    } else {
+      this.$router.push(this.$route.meta.path)
+    }
   }
 }
 </script>
@@ -112,22 +108,6 @@ export default class home extends Vue {
             color: #fff;
           }
         }
-      }
-    }
-    // 主体
-    .home-main {
-      height: calc(100vh - 60px);
-    }
-
-    .el-aside {
-      background: $themeColor;
-    }
-
-    .main-right {
-      padding: 15px;
-      .el-main {
-        border-radius: 6px;
-        background: #fff;
       }
     }
   }

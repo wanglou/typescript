@@ -31,17 +31,17 @@ import { mapState } from 'vuex'
 export default class AsideMenu extends Vue {
   activeNum: number = 0
   menuList: Array<object> = [
-    // { name: '首页', path: '/homePage' },
-    // { name: 'canvas水波纹', path: '/canvasPage' },
-    // { name: '水印', path: '/watermark' },
-    // { name: '防抖节流', path: '/debounceThrottle' },
-    // { name: '闭包', path: '/closure' },
-    // { name: '图片裁剪', path: '/imageCropping' },
-    // { name: '日历', path: '/calendar' },
-    // { name: 'flex弹性盒子', path: '/flex' },
-    // { name: '导出PDF', path: '/exportPDF' },
-    // { name: '冒泡排序', path: '/bubbleSort' },
-    // { name: 'mock', path: '/mock' },
+    { name: '首页', path: '/homePage' },
+    { name: 'canvas水波纹', path: '/canvasPage' },
+    { name: '水印', path: '/watermark' },
+    { name: '防抖节流', path: '/debounceThrottle' },
+    { name: '闭包', path: '/closure' },
+    { name: '图片裁剪', path: '/imageCropping' },
+    { name: '日历', path: '/calendar' },
+    { name: 'flex弹性盒子', path: '/flex' },
+    { name: '导出PDF', path: '/exportPDF' },
+    { name: '冒泡排序', path: '/bubbleSort' },
+    { name: 'mock', path: '/mock' },
     { name: 'async', path: '/async' },
     { name: 'ES6class', path: '/ES6class' },
     { name: '...', path: '/ExtOperator' }
