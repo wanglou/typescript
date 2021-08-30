@@ -3,7 +3,9 @@
     <!-- 可拖拽组件 -->
     <div class="left">
       <ul>
-        <li v-for="(item, index) in leftComponentList" :key="index" @mousedown="leftMousedown"></li>
+        <li v-for="(item, index) in leftComponentList" :key="index" @mousedown="leftMousedown">
+          <img draggable="false" :src="item.img" alt="">
+        </li>
       </ul>
     </div>
 
@@ -30,7 +32,7 @@ import Component from 'vue-class-component'
 })
 export default class visualPlatformIndex extends Vue {
   leftComponentList: Array<object> = [
-    { name: '' }
+    { name: '', img: require('@/assets/images/bar.png') }
   ]
   middleList: Array<object> = []
   movingDivStyle: object = {
@@ -54,6 +56,9 @@ export default class visualPlatformIndex extends Vue {
     }
     document.onmousemove = function (ev) {
       const event = (ev || window.event) as any
+      event.preventDefault();
+
+
       self.movingDivStyle = {
         left: event.clientX + 'px',
         top: event.clientY + 'px',
@@ -119,6 +124,7 @@ export default class visualPlatformIndex extends Vue {
       document.onmousemove = null
       document.onmouseup = null
     }
+
   }
 }
 </script>
@@ -159,6 +165,10 @@ export default class visualPlatformIndex extends Vue {
           background: #33383E;
           margin: 10px 10px 0;
           cursor: move;
+          img {
+            width: 100%;
+            height: 100%;
+          }
         }
       }
     }
