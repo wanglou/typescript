@@ -94,23 +94,30 @@ export default class visualPlatformIndex extends Vue {
     self = this
     
     const offsetX = eleEvent.offsetX,
-    offsetY = eleEvent.offsetY
-
+          offsetY = eleEvent.offsetY,
+          itemWidth = eleEvent.target.offsetWidth,
+          itemHeight = eleEvent.target.offsetHeight
     const middleEle = self.$refs['middle'] as any
     const offsetLeft = middleEle.offsetLeft,
-          offsetTop = middleEle.offsetTop
-    middleEle.onmousemove = function (ev) {
-      const itemEvent = ev || window.event
-      item.left = itemEvent.clientX - offsetLeft - offsetX
-      item.top = itemEvent.clientY - offsetTop - offsetY
+          offsetTop = middleEle.offsetTop,
+          width = middleEle.offsetWidth,
+          height = middleEle.offsetHeight
+    document.onmousemove = function (ev) {
+      const itemEvent = ev || window.event as any
+      let left = itemEvent.clientX - offsetLeft - offsetX,
+      top = itemEvent.clientY - offsetTop - offsetY
+      if (left <= 0) left = 0
+      if (left >= width - itemWidth) left = width - itemWidth
+      if (top <= 0) top = 0
+      if (top >= height - itemHeight) top = height - itemHeight
+
+      item.left = left
+      item.top = top
     }
 
     document.onmouseup = function () {
-      middleEle.onmousemove = null
-    }
-
-    middleEle.onmouseleave = function (ev: any) {
-      middleEle.onmousemove = null
+      document.onmousemove = null
+      document.onmouseup = null
     }
   }
 }
