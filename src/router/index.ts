@@ -112,6 +112,11 @@ const routes: Array<RouteConfig> = [
     ]
   },
   {
+    path: '/preview',
+    name: 'preview',
+    component: () => import(/* webpackChunkName: "preview" */ '../views/visualPlatform/preview.vue')
+  },
+  {
     path: '/login',
     name: 'login',
     component: () => import(/* webpackChunkName: "login" */ '../views/login.vue')

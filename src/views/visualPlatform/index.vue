@@ -30,13 +30,18 @@
         <div class="middle-item" @mousedown="middleItemMousedown($event, item)" v-for="(item, index) in middleList" :key="index" :style="{left: item.left + 'px', top: item.top + 'px'}">
           <div v-html="item.content"></div>
           <el-button @click="middleItemDel(item, index)" type="text" icon="el-icon-delete">  </el-button>
+          <i class="corner left-top"></i>
+          <i class="corner right-top"></i>
+          <i class="corner right-bottom"></i>
+          <i class="corner left-bottom"></i>
         </div>
       </div>
     </div>
 
     <!-- 组件配置 -->
     <div class="right">
-      <el-button type="primary" size="mini"> 预览 </el-button>
+      <el-button type="primary" size="mini" @click="saveBtn"> 保存 </el-button>
+      <el-button type="primary" size="mini" @click="previewBtn"> 预览 </el-button>
     </div>
 
     <!-- 拖拽中的div -->
@@ -51,6 +56,9 @@ import * as echarts from 'echarts';
 
 // Define the component in class-style
 @Component({
+  created () {
+    sessionStorage.PREVIEW_DATA = ''
+  },
   mounted () {
     // 画尺子
     this.drawRulers()
@@ -185,7 +193,8 @@ export default class visualPlatformIndex extends Vue {
           num: num,
           left: event.offsetX - offsetX,
           top: event.offsetY - offsetY,
-          name: item.name
+          name: item.name,
+          option: self.chartList[item.name]
         })
         
         self.$nextTick(() => {
@@ -201,11 +210,12 @@ export default class visualPlatformIndex extends Vue {
   middleItemMousedown (event: any, item: any):void {
     const eleEvent = event || window.event,
     self = this
-    
     const offsetX = eleEvent.offsetX,
           offsetY = eleEvent.offsetY,
-          itemWidth = eleEvent.target.offsetWidth,
-          itemHeight = eleEvent.target.offsetHeight
+          mouseX = eleEvent.clientX,
+          mouseY = eleEvent.clientY,
+          afterWidth = parseInt(document.getElementById(`myChart${item.num}`).style.width),
+          afterHeight = parseInt(document.getElementById(`myChart${item.num}`).style.height)
 
     const middleEle = self.$refs['middle'] as any,
           middleContainerEle = self.$refs['middle-container'] as any
@@ -219,21 +229,33 @@ export default class visualPlatformIndex extends Vue {
           vhLine1 = self.$refs['vh-line-1'] as any,
           vhLine2 = self.$refs['vh-line-2'] as any
     document.onmousemove = function (ev) {
-      const itemEvent = ev || window.event as any
-      let left = itemEvent.clientX - offsetLeft - offsetX,
-      top = itemEvent.clientY - offsetTop - offsetY
-      if (left <= 0) left = 0
-      if (left >= width - itemWidth) left = width - itemWidth
-      if (top <= 0) top = 0
-      if (top >= height - itemHeight) top = height - itemHeight
-
-      vwLine1.style.top = top + 20 + 'px'
-      vwLine2.style.top = top + 20 + itemHeight + 'px'
-      vhLine1.style.left = left + 20 + 'px'
-      vhLine2.style.left = left + 20 + itemWidth + 'px'
-
-      item.left = left
-      item.top = top
+      const itemEvent = ev || window.event as any,
+            mouseMoveX = itemEvent.clientX - mouseX,
+            mouseMoveY = itemEvent.clientY - mouseY
+      if (event.target.className.indexOf('corner') !== -1) {
+        const myChartEle = document.getElementById(`myChart${item.num}`)
+        myChartEle.style.width = (afterWidth + mouseMoveX) + 'px'
+        myChartEle.style.height = (afterHeight + mouseMoveY) + 'px'
+        const myCharts = echarts.init(document.getElementById(`myChart${item.num}`))
+        myCharts.resize()
+      } else {
+        let left = itemEvent.clientX - offsetLeft - offsetX,
+        top = itemEvent.clientY - offsetTop - offsetY,
+        itemWidth = eleEvent.target.offsetWidth,
+        itemHeight = eleEvent.target.offsetHeight
+        if (left <= 0) left = 0
+        if (left >= width - itemWidth) left = width - itemWidth
+        if (top <= 0) top = 0
+        if (top >= height - itemHeight) top = height - itemHeight
+  
+        vwLine1.style.top = top + 20 + 'px'
+        vwLine2.style.top = top + 20 + itemHeight + 'px'
+        vhLine1.style.left = left + 20 + 'px'
+        vhLine2.style.left = left + 20 + itemWidth + 'px'
+  
+        item.left = left
+        item.top = top
+      }
     }
 
     document.onmouseup = function () {
@@ -253,7 +275,7 @@ export default class visualPlatformIndex extends Vue {
     this.$nextTick(() => {
       this.middleList.forEach((child: any) => {
         const myCharts = echarts.init(document.getElementById(`myChart${child.num}`))
-        myCharts.setOption(this.chartList[child.name])
+        myCharts.setOption(child.option)
       })
     })
   }
@@ -306,6 +328,31 @@ export default class visualPlatformIndex extends Vue {
     }
     ctx2.stroke();
   }
+
+  // 保存按钮
+  saveBtn ():void {
+    const middleEle = this.$refs['middle'] as any
+    const middleEleWidth = middleEle.offsetWidth,
+          middleEleHeight = middleEle.offsetHeight
+    let previewList = []
+    this.middleList.forEach((child: any) => {
+      const itemEle = document.getElementById(`myChart${child.num}`)
+      previewList.push({
+        option: child.option,
+        num: child.num,
+        left: child.left / middleEleWidth,
+        top: child.top / middleEleHeight,
+        width: itemEle.offsetWidth / middleEleWidth,
+        height: itemEle.offsetHeight / middleEleHeight
+      })
+    })
+    sessionStorage.PREVIEW_DATA = JSON.stringify(previewList)
+  }
+
+  // 预览按钮
+  previewBtn ():void {
+    window.open('/preview')
+  }
 }
 </script>
 <style lang="scss">
@@ -344,6 +391,9 @@ export default class visualPlatformIndex extends Vue {
           .el-button {
             display: block;
           }
+          &>i {
+            display: block;
+          }
         }
         .el-button {
           display: none;
@@ -352,6 +402,38 @@ export default class visualPlatformIndex extends Vue {
           right: 5px;
           padding: 0;
           color: #F56C6C;
+        }
+        &>i {
+          display: none;
+          width: 8px;
+          height: 8px;
+          background: #1E9FFF;
+          position: absolute;
+          &.left-top {
+            left: 0;
+            top: 0;
+            transform: translate(-50%, -50%);
+            cursor: se-resize;
+          }
+          &.right-top {
+            right: 0;
+            top: 0;
+            transform: translate(50%, -50%);
+            cursor: ne-resize;
+          }
+          
+          &.right-bottom {
+            right: 0;
+            bottom: 0;
+            transform: translate(50%, 50%);
+            cursor: se-resize;
+          }
+          &.left-bottom {
+            left: 0;
+            bottom: 0;
+            transform: translate(-50%, 50%);
+            cursor: ne-resize	;
+          }
         }
       }
 
