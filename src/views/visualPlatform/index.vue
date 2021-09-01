@@ -50,6 +50,7 @@
 
     <!-- 代码弹框 -->
     <el-dialog
+      v-dialogDrag
       title="Echarts配置项"
       :visible.sync="dialogVisible"
       :close-on-click-modal="false"
@@ -345,7 +346,7 @@ export default class visualPlatformIndex extends Vue {
           child = this.middleList[this.middleListIndex] as any
     child.option = JSON.parse(code.codemirror.getValue())
     const myCharts = echarts.init(document.getElementById(`myChart${child.num}`))
-    myCharts.setOption(child.option)
+    myCharts.setOption(child.option, true)
     this.dialogVisible = false
   }
 

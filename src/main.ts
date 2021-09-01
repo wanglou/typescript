@@ -10,6 +10,7 @@ import htmlToPdf from '@/utils/htmlToPdf';
 import "echarts";
 import ECharts from 'vue-echarts'
 import { Home } from '@icon-park/vue'
+import '@/utils/dialog'
 
 Vue.config.productionTip = false
 
