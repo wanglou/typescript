@@ -29,11 +29,12 @@
       <div class="middle" ref="middle">
         <div class="middle-item" @mousedown="middleItemMousedown($event, item)" v-for="(item, index) in middleList" :key="index" :style="{left: item.left + 'px', top: item.top + 'px'}">
           <div v-html="item.content"></div>
-          <el-button @click="middleItemDel(item, index)" type="text" icon="el-icon-delete">  </el-button>
-          <i class="corner left-top"></i>
+          <el-button @click="codeEdit(item, index)" type="text" class="icon-s-opportunity" icon="el-icon-s-opportunity">  </el-button>
+          <el-button @click="middleItemDel(item, index)" type="text" class="icon-delete" icon="el-icon-delete">  </el-button>
+          <!-- <i class="corner left-top"></i>
           <i class="corner right-top"></i>
+          <i class="corner left-bottom"></i> -->
           <i class="corner right-bottom"></i>
-          <i class="corner left-bottom"></i>
         </div>
       </div>
     </div>
@@ -46,6 +47,24 @@
 
     <!-- 拖拽中的div -->
     <div ref="moving-div" :style="movingDivStyle" class="moving-div"></div>
+
+    <!-- 代码弹框 -->
+    <el-dialog
+      title="Echarts配置项"
+      :visible.sync="dialogVisible"
+      :close-on-click-modal="false"
+      width="800px">
+
+      <div>
+        <codemirror ref="codemirror" v-model="codeContent" :options="cmOption" />
+      </div>
+
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false" size="mini">取 消</el-button>
+        <el-button type="primary" @click="codeEditConfirm" size="mini">确 定</el-button>
+      </span>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -54,8 +73,25 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import * as echarts from 'echarts';
 
+import { codemirror } from 'vue-codemirror'
+import 'codemirror/lib/codemirror.css'
+// 语言
+import 'codemirror/mode/javascript/javascript.js'
+// 主题
+import 'codemirror/theme/base16-dark.css'
+// 折叠
+import 'codemirror/addon/fold/foldgutter.css'
+import 'codemirror/addon/fold/foldcode'
+import 'codemirror/addon/fold/foldgutter'
+import 'codemirror/addon/fold/brace-fold'
+import 'codemirror/addon/fold/comment-fold'
+
+
 // Define the component in class-style
 @Component({
+  components: {
+    codemirror
+  },
   created () {
     sessionStorage.PREVIEW_DATA = ''
   },
@@ -65,12 +101,25 @@ import * as echarts from 'echarts';
   }
 })
 export default class visualPlatformIndex extends Vue {
+  codeContent = '{}'
+  cmOption = {
+    tabSize: 4,
+    mode: 'text/javascript',
+    theme: 'base16-dark',
+    lineNumbers: true,
+    line: true,
+    foldGutter: true,
+    lineWrapping: true,
+    gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter', 'CodeMirror-lint-markers'],
+  }
+  dialogVisible:boolean = false 
   leftComponentList: Array<object> = [
     { name: '柱状图', img: require('@/assets/images/bar.png') },
     { name: '折线图', img: require('@/assets/images/line.png') },
     { name: '饼图', img: require('@/assets/images/pie.png') }
   ]
   middleList: Array<object> = []
+  middleListIndex = 0
   movingDivStyle: object = {
     left: 0,
     top: 0,
@@ -280,6 +329,26 @@ export default class visualPlatformIndex extends Vue {
     })
   }
 
+  // 编辑echarts配置项
+  codeEdit (item: any, index: number) {
+    this.dialogVisible = true
+    this.middleListIndex = index
+    let option = JSON.stringify(item.option).replace(/{/g, '{\n  ')
+                                            .replace(/],/g, '],\n  ')
+                                            .replace(/},/g, '\n},\n  ')
+    this.codeContent = option
+  }
+
+  // 编辑配置项确定
+  codeEditConfirm () {
+    const code = this.$refs.codemirror as any,
+          child = this.middleList[this.middleListIndex] as any
+    child.option = JSON.parse(code.codemirror.getValue())
+    const myCharts = echarts.init(document.getElementById(`myChart${child.num}`))
+    myCharts.setOption(child.option)
+    this.dialogVisible = false
+  }
+
   // 画尺子
   drawRulers ():void {
     // 横向尺子
@@ -364,14 +433,15 @@ export default class visualPlatformIndex extends Vue {
     box-sizing: border-box;
     display: flex;
     &>div {
-      background: #fff;
       height: 100%;
     }
     .left, .right {
       width: 240px;
       margin: 0 5px;
+      background: #fff;
     }
     .middle-container {
+      background: #fff;
       flex: 1;
       position: relative;
       overflow: hidden;
@@ -402,6 +472,9 @@ export default class visualPlatformIndex extends Vue {
           right: 5px;
           padding: 0;
           color: #F56C6C;
+        }
+        .icon-s-opportunity {
+          right: 25px;
         }
         &>i {
           display: none;
@@ -503,6 +576,44 @@ export default class visualPlatformIndex extends Vue {
       border-radius: 5px;
       background: #33383E;
       cursor: move;
+    }
+
+    @keyframes dialog-fade-in {
+      0% {
+        transform: translate3d(0, -249px, 0);
+        opacity: 0;
+      }
+      100% {
+        transform: translate3d(0, 0, 0);
+        opacity: 1;
+      }
+    }
+  
+    @keyframes dialog-fade-out {
+      0% {
+        transform: translate3d(0, 0, 0);
+        opacity: 1;
+      }
+      100% {
+        transform: translate3d(0, -249px, 0);
+        opacity: 0;
+      }
+    }
+
+    .el-dialog {
+      .el-dialog__header {
+        background: $themeColor;
+        opacity: 0.8;
+        .el-dialog__title {
+          color: #fff;
+        }
+      }
+      .el-dialog__body {
+        padding: 5px 1px;
+      }
+      .el-dialog__footer {
+        padding: 5px 10px 10px;
+      }
     }
   }
 </style>
