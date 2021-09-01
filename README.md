@@ -1,5 +1,5 @@
 # vue-ts typescript练习
-
+[预览 http://124.70.88.47:8080/tlz/#/visualPlatform](http://124.70.88.47:8080/tlz/#/visualPlatform)
 ## Project setup
 ```
 npm install
