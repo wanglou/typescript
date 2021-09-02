@@ -334,9 +334,7 @@ export default class visualPlatformIndex extends Vue {
   codeEdit (item: any, index: number) {
     this.dialogVisible = true
     this.middleListIndex = index
-    let option = JSON.stringify(item.option).replace(/{/g, '{\n  ')
-                                            .replace(/],/g, '],\n  ')
-                                            .replace(/},/g, '\n},\n  ')
+    let option = JSON.stringify(item.option, null, 2)
     this.codeContent = option
   }
 
