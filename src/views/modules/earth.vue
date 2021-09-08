@@ -8,7 +8,6 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import * as echarts from "echarts";
-import worldJson from '@/utils/world.json';
 // Define the component in class-style
 @Component({
   mounted() {
@@ -18,7 +17,7 @@ import worldJson from '@/utils/world.json';
       height: 2048,
     });
 
-    echarts.registerMap('world', worldJson);
+    echarts.registerMap('world', require('@/utils/world.json'));
     mapChart.setOption({
       backgroundColor: "#044161",
       series: [
