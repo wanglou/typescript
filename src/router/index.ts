@@ -98,8 +98,14 @@ const routes: Array<RouteConfig> = [
           {
             path: '/ExtOperator',
             name: 'ExtOperator',
-            meta: {index: 12},
+            meta: {index: 13},
             component: () => import(/* webpackChunkName: "ExtOperator" */ '../views/modules/ExtOperator.vue')
+          },
+          {
+            path: '/earth',
+            name: 'earth',
+            meta: {index: 14},
+            component: () => import(/* webpackChunkName: "earth" */ '../views/modules/earth.vue')
           }
         ]
       },

@@ -44,7 +44,8 @@ export default class AsideMenu extends Vue {
     { name: 'mock', path: '/mock' },
     { name: 'async', path: '/async' },
     { name: 'ES6class', path: '/ES6class' },
-    { name: '...', path: '/ExtOperator' }
+    { name: '...', path: '/ExtOperator' },
+    { name: '3D地球', path: '/earth' }
   ]
   asideClick (item, index):void {
     this.activeNum = index

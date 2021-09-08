@@ -9,6 +9,7 @@ import '@/assets/scss/index.scss';
 import htmlToPdf from '@/utils/htmlToPdf';
 import "echarts";
 import ECharts from 'vue-echarts'
+import 'echarts-gl'
 import { Home } from '@icon-park/vue'
 import '@/utils/dialog'
 
