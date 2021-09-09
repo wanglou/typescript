@@ -70,15 +70,15 @@ import * as echarts from "echarts";
           type: 'scatter3D',
           coordinateSystem: 'globe',
           emphasis: {
-           label: {
-            show: false
-           }
+            label: {
+              show: false
+            }
           },
           data: seriseData.map((v) => {
-           return {
-            name: v.name,
-            value: [v.lng, v.lat]
-           };
+            return {
+              name: v.name,
+              value: [v.lng, v.lat]
+            };
           })
         }
       ]

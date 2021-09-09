@@ -26,16 +26,16 @@ export default class bubbleSort extends Vue {
   
   private created () {
     // this.sortFn()
-    let obj = {
-      name:'孙章',
-      count:1
-    }
-    let obj2 = {
-      name:'孙章',
-      count:1,
-      age:3,
-      sex:true
-    }
+    // let obj = {
+    //   name:'孙章',
+    //   count:1
+    // }
+    // let obj2 = {
+    //   name:'孙章',
+    //   count:1,
+    //   age:3,
+    //   sex:true
+    // }
     // 错误类型 count 报错
     // let obj3 = {
     //   name: '孙章',
@@ -43,15 +43,16 @@ export default class bubbleSort extends Vue {
     //   age:3,
     //   sex:true
     // }
-    this.changeObj(obj2);
-  }
+    // this.changeObj(obj2);
+    console.log(this.quickSort([2, 1, 9, 8, 7, 6, 5, 2, 1]))
+}
   //changeObj方法传入的参数必须符合objValidate的条件
   private changeObj(obj:objValidate){
     console.log(obj.name);
     console.log(obj.count);
     // obj.sex = 1
   }
-
+  // 冒泡排序
   private sortFn ():void {
     // let initList = [{num: 9}, {num: 8}, {num: 5}, {num: 7}, {num: 6}, {num: 1}, {num: 2}, {num: 0}, {num: 3}, {num: 4}]
     // console.log(initList.sort((a, b) => {
@@ -69,10 +70,30 @@ export default class bubbleSort extends Vue {
       }
     }
     console.log('冒泡排序' + arr)
+  }
 
+  // 快速排序
+  private quickSort (arr):Array<object> {
 
+    if(arr.length<=1) {
+      return arr;
+    }
+    var s = Math.floor(arr.length / 2);
+  
+    var temp = arr.splice(s,1);
     
-    console.log('快速排序' + 1)
+    var left=[];
+    var right=[];
+    for(var i=0;i<arr.length;i++) {
+      if(arr[i]<temp) {
+        left.push(arr[i]);
+      }
+      if(arr[i]>=temp) {
+        right.push(arr[i]);
+      }
+    }
+    return this.quickSort(left).concat(temp, this.quickSort(right));  
+
   }
 }
 </script>
