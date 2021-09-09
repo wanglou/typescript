@@ -75,20 +75,20 @@ export default class bubbleSort extends Vue {
   // 快速排序
   private quickSort (arr):Array<object> {
 
-    if(arr.length<=1) {
+    if (arr.length<=1) {
       return arr;
     }
     var s = Math.floor(arr.length / 2);
   
-    var temp = arr.splice(s,1);
+    var temp = arr.splice(s, 1);
     
-    var left=[];
-    var right=[];
-    for(var i=0;i<arr.length;i++) {
-      if(arr[i]<temp) {
+    var left = [];
+    var right = [];
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i] < temp) {
         left.push(arr[i]);
       }
-      if(arr[i]>=temp) {
+      if (arr[i]>=temp) {
         right.push(arr[i]);
       }
     }
