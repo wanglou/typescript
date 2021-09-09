@@ -11,15 +11,26 @@ import * as echarts from "echarts";
 // Define the component in class-style
 @Component({
   mounted() {
-    var canvas = document.createElement("canvas");
-    var mapChart = echarts.init(canvas, null, {
+    const seriseData = [
+       {},
+       {
+        name: '中国',
+        lng: 111.11,
+        lat: 33.33,
+       }
+    ]
+    const canvas = document.createElement("canvas");
+    const mapChart = echarts.init(canvas, null, {
       width: 4096,
-      height: 2048,
+      height: 2048
     });
 
     echarts.registerMap('world', require('@/utils/world.json'));
     mapChart.setOption({
-      backgroundColor: "#044161",
+      backgroundColor: "#054262",
+      tooltip: {
+        trigger: 'item'
+      },
       series: [
         {
           type: "map",
@@ -32,18 +43,14 @@ import * as echarts from "echarts";
           boundingCoords: [
             [-180, 90],
             [180, -90],
-          ],
-          itemStyle: {
-            emphasis: {
-                areaColor:"#EEF824",
-            }
-          },
-        },
-      ],
+          ]
+        }
+      ]
     });
     const myCharts = echarts.init(document.getElementById("myChart"));
     myCharts.setOption({
-      backgroundColor: "#fff",
+      tooltip: {
+      },
       globe: {
         baseTexture: mapChart,
         shading: "color",
@@ -57,9 +64,26 @@ import * as echarts from "echarts";
           targetCoord: [100.46, 39.92], // 定位到中国
         }
       },
-      series: [],
+      series: [
+        {
+          name: '数据',
+          type: 'scatter3D',
+          coordinateSystem: 'globe',
+          emphasis: {
+           label: {
+            show: false
+           }
+          },
+          data: seriseData.map((v) => {
+           return {
+            name: v.name,
+            value: [v.lng, v.lat]
+           };
+          })
+        }
+      ]
     });
-  },
+  }
 })
 export default class earth extends Vue {}
 </script>
