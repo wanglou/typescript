@@ -11,7 +11,13 @@ module.exports = {
   // webpack配置
   // see https://github.com/vuejs/vue-cli/blob/dev/docs/webpack.md
   chainWebpack: () => {},
-  configureWebpack: () => {},
+  configureWebpack: {
+    resolve: {
+        alias: {
+          'vue$': 'vue/dist/vue.esm.js' 
+        }
+    }
+  },
   // vue-loader 配置项
   // https://vue-loader.vuejs.org/en/options.html
   // vueLoader: {},
