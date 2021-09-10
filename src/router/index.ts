@@ -106,6 +106,12 @@ const routes: Array<RouteConfig> = [
             name: 'earth',
             meta: {index: 14},
             component: () => import(/* webpackChunkName: "earth" */ '../views/modules/earth.vue')
+          },
+          {
+            path: '/richTextEditor',
+            name: 'richTextEditor',
+            meta: {index: 15},
+            component: () => import(/* webpackChunkName: "richTextEditor" */ '../views/modules/richTextEditor.vue')
           }
         ]
       },
