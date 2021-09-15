@@ -1,7 +1,7 @@
 <template>
   <div class="es6-class">
     {{ a }}
-    <iframe src="http://localhost:80" frameborder="0"></iframe>
+    <iframe id="iframe" src="http://localhost:80" frameborder="0"></iframe>
   </div>
 </template>
 
