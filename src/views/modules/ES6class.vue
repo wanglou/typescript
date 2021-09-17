@@ -1,7 +1,7 @@
 <template>
   <div class="es6-class">
     {{ a }}
-    <iframe id="iframe" src="http://localhost:80" frameborder="0"></iframe>
+    <iframe id="iframe" width="100%" height="500" src="http://114.116.210.227:8080/bi/view?proc=1&action=viewer&hback=true&db=!6d4b!!8bd5!!5f39!!6846!.db&platform=PC&browserType=chrome" frameborder="0"></iframe>
   </div>
 </template>
 
