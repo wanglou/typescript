@@ -7,12 +7,20 @@
 
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import Mock from 'mockjs'
+import '@/api/user'
+import service from '@/api/axios'
 // Define the component in class-style
 @Component({
 })
 export default class mock extends Vue {
   private created () {
+    service({
+      url: '/login',
+      method: 'post',
+      data: {}
+    }).then(res => {
+      console.log(res)
+    })
     // 生成随机字符串，指定长度和范围
     // console.log(Mock.mock('@cword(10, 15)'))
 

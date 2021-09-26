@@ -1,7 +1,7 @@
 import axios from 'axios'
 import querystring from 'querystring'
 const service = axios.create({
-  baseURL: '/api',
+  // baseURL: '/api',
   timeout: 10 * 1000
 })
 
